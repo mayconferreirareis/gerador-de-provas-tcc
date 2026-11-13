@@ -1,0 +1,91 @@
+import type { Livro, Testamento } from "./tipos";
+
+const dadosLivros: [string, string, Testamento, string][] = [
+  ["genesis", "Gênesis", "AT", "Pentateuco"],
+  ["exodo", "Êxodo", "AT", "Pentateuco"],
+  ["levitico", "Levítico", "AT", "Pentateuco"],
+  ["numeros", "Números", "AT", "Pentateuco"],
+  ["deuteronomio", "Deuteronômio", "AT", "Pentateuco"],
+  ["josue", "Josué", "AT", "Históricos"],
+  ["juizes", "Juízes", "AT", "Históricos"],
+  ["rute", "Rute", "AT", "Históricos"],
+  ["1-samuel", "1 Samuel", "AT", "Históricos"],
+  ["2-samuel", "2 Samuel", "AT", "Históricos"],
+  ["1-reis", "1 Reis", "AT", "Históricos"],
+  ["2-reis", "2 Reis", "AT", "Históricos"],
+  ["1-cronicas", "1 Crônicas", "AT", "Históricos"],
+  ["2-cronicas", "2 Crônicas", "AT", "Históricos"],
+  ["esdras", "Esdras", "AT", "Históricos"],
+  ["neemias", "Neemias", "AT", "Históricos"],
+  ["ester", "Ester", "AT", "Históricos"],
+  ["jo", "Jó", "AT", "Poéticos"],
+  ["salmos", "Salmos", "AT", "Poéticos"],
+  ["proverbios", "Provérbios", "AT", "Poéticos"],
+  ["eclesiastes", "Eclesiastes", "AT", "Poéticos"],
+  ["canticos", "Cânticos", "AT", "Poéticos"],
+  ["isaias", "Isaías", "AT", "Profetas Maiores"],
+  ["jeremias", "Jeremias", "AT", "Profetas Maiores"],
+  ["lamentacoes", "Lamentações", "AT", "Profetas Maiores"],
+  ["ezequiel", "Ezequiel", "AT", "Profetas Maiores"],
+  ["daniel", "Daniel", "AT", "Profetas Maiores"],
+  ["oseias", "Oseias", "AT", "Profetas Menores"],
+  ["joel", "Joel", "AT", "Profetas Menores"],
+  ["amos", "Amós", "AT", "Profetas Menores"],
+  ["obadias", "Obadias", "AT", "Profetas Menores"],
+  ["jonas", "Jonas", "AT", "Profetas Menores"],
+  ["miqueias", "Miqueias", "AT", "Profetas Menores"],
+  ["naum", "Naum", "AT", "Profetas Menores"],
+  ["habacuque", "Habacuque", "AT", "Profetas Menores"],
+  ["sofonias", "Sofonias", "AT", "Profetas Menores"],
+  ["ageu", "Ageu", "AT", "Profetas Menores"],
+  ["zacarias", "Zacarias", "AT", "Profetas Menores"],
+  ["malaquias", "Malaquias", "AT", "Profetas Menores"],
+  ["mateus", "Mateus", "NT", "Evangelhos"],
+  ["marcos", "Marcos", "NT", "Evangelhos"],
+  ["lucas", "Lucas", "NT", "Evangelhos"],
+  ["joao", "João", "NT", "Evangelhos"],
+  ["atos", "Atos", "NT", "Histórico"],
+  ["romanos", "Romanos", "NT", "Cartas Paulinas"],
+  ["1-corintios", "1 Coríntios", "NT", "Cartas Paulinas"],
+  ["2-corintios", "2 Coríntios", "NT", "Cartas Paulinas"],
+  ["galatas", "Gálatas", "NT", "Cartas Paulinas"],
+  ["efesios", "Efésios", "NT", "Cartas Paulinas"],
+  ["filipenses", "Filipenses", "NT", "Cartas Paulinas"],
+  ["colossenses", "Colossenses", "NT", "Cartas Paulinas"],
+  ["1-tessalonicenses", "1 Tessalonicenses", "NT", "Cartas Paulinas"],
+  ["2-tessalonicenses", "2 Tessalonicenses", "NT", "Cartas Paulinas"],
+  ["1-timoteo", "1 Timóteo", "NT", "Cartas Paulinas"],
+  ["2-timoteo", "2 Timóteo", "NT", "Cartas Paulinas"],
+  ["tito", "Tito", "NT", "Cartas Paulinas"],
+  ["filemom", "Filemom", "NT", "Cartas Paulinas"],
+  ["hebreus", "Hebreus", "NT", "Cartas Gerais"],
+  ["tiago", "Tiago", "NT", "Cartas Gerais"],
+  ["1-pedro", "1 Pedro", "NT", "Cartas Gerais"],
+  ["2-pedro", "2 Pedro", "NT", "Cartas Gerais"],
+  ["1-joao", "1 João", "NT", "Cartas Gerais"],
+  ["2-joao", "2 João", "NT", "Cartas Gerais"],
+  ["3-joao", "3 João", "NT", "Cartas Gerais"],
+  ["judas", "Judas", "NT", "Cartas Gerais"],
+  ["apocalipse", "Apocalipse", "NT", "Profético"],
+];
+
+const descricoes: Record<string, string> = {
+  genesis: "O livro das origens: criação, queda, dilúvio e a história dos patriarcas.",
+  salmos: "Coleção de cânticos e orações de louvor, lamento e confiança em Deus.",
+  joao: "Evangelho que apresenta Jesus como o Verbo de Deus, por meio de sinais e discursos.",
+};
+
+export const livros: Livro[] = dadosLivros.map(([id, nome, testamento, categoria]) => ({
+  id,
+  nome,
+  testamento,
+  categoria,
+  descricao:
+    descricoes[id] ?? `Livro do ${testamento === "AT" ? "Antigo" : "Novo"} Testamento (${categoria}).`,
+}));
+
+export const idsLivrosEmDestaque = ["genesis", "exodo", "salmos", "proverbios", "mateus", "marcos", "lucas", "joao"];
+
+export function buscarLivro(id: string) {
+  return livros.find((b) => b.id === id);
+}
