@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793245825471,
+      "tag": "0000_criar_livros_questoes_provas",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793245976254,
+      "tag": "0001_funcao_temporaria_importacao",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793246002752,
+      "tag": "0002_remover_funcao_temporaria",
+      "breakpoints": true
+    }
+  ]
+}

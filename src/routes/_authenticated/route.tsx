@@ -1,8 +1,8 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 
-// Layout sem caminho que protege todas as rotas filhas (/gerar, /prova, /gabarito, /historico).
-// O `ssr: false` é obrigatório: a sessão vive no navegador e o servidor não consegue lê-la.
+// Protege todas as rotas filhas (/gerar, /prova, /gabarito, /historico).
+// A verificação do login acontece no navegador.
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async ({ location }) => {

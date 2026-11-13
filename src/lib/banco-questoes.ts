@@ -73,7 +73,7 @@ export interface RegistroProvaUsuario {
   questoes_ids: string[];
 }
 
-/** Provas do usuário autenticado (RLS limita às linhas do próprio usuário). */
+/** Provas do usuário autenticado (cada usuário vê somente as suas). */
 export async function buscarProvasDoUsuario(): Promise<RegistroProvaUsuario[]> {
   const { data, error: erro } = await supabase
     .from("provas")

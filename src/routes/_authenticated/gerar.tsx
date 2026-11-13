@@ -39,7 +39,7 @@ function GerarProva() {
     try {
       const prova = criarProva(livroId, conjunto);
       if (prova) {
-        // Registra a prova no histórico do usuário autenticado (RLS cuida do vínculo).
+        // Registra a prova no histórico do usuário.
         try {
           const { data } = await supabase.auth.getUser();
           if (data.user) {

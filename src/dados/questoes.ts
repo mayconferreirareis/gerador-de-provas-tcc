@@ -1,4 +1,4 @@
-// Questões de DEMONSTRAÇÃO. Serão substituídas por dados do banco em etapa futura.
+// Questões de exemplo usadas apenas nos testes.
 import type { ChaveAlternativa, Questao } from "./tipos";
 
 type DadosQuestaoDemonstracao = [string, string, string, string, string, ChaveAlternativa, string?];

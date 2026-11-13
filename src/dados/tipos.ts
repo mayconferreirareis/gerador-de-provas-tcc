@@ -2,7 +2,7 @@ export type Testamento = "AT" | "NT";
 export type ChaveAlternativa = "A" | "B" | "C" | "D";
 
 export interface Livro {
-  id: string; // slug, ex.: "joao"
+  id: string;
   nome: string;
   testamento: Testamento;
   categoria: string;

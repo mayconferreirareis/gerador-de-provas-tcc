@@ -56,7 +56,7 @@ function LinksNavegacao({ aoNavegar }: { aoNavegar?: () => void }) {
   const navigate = useNavigate();
 
   async function sair() {
-    // Ordem defensiva: para consultas em curso, limpa o cache, encerra a sessão e sai.
+    // Encerra a sessão e limpa os dados carregados.
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();

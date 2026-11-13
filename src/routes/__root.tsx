@@ -119,7 +119,7 @@ function AplicacaoRaiz() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
 
-  // Ouvinte único de transições de identidade: mantém o roteador e o cache coerentes com a sessão.
+  // Atualiza as páginas quando o usuário entra ou sai.
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
@@ -131,7 +131,7 @@ function AplicacaoRaiz() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Obrigatório: as páginas filhas aparecem aqui. Remover <Outlet /> impede sua exibição. */}
+      {/* As páginas do sistema aparecem aqui. */}
       <EstruturaAplicacao>
         <Outlet />
       </EstruturaAplicacao>
