@@ -2,51 +2,73 @@ import { useSyncExternalStore } from "react";
 import type { Prova, Questao } from "@/dados/tipos";
 import { TAMANHO_PROVA } from "@/dados/tipos";
 
-/** Sorteia `quantidade` questões distintas (Fisher-Yates). Retorna null se não houver questões suficientes. */
-export function sortearQuestoes(conjunto: Questao[], quantidade = TAMANHO_PROVA, aleatorio = Math.random): Questao[] | null {
-  if (conjunto.length < quantidade) return null;
-  const copia = [...conjunto];
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(aleatorio() * (i + 1));
-    const temporario = copia[i];
-    const selecionada = copia[j];
-    if (!temporario || !selecionada) continue;
-    copia[i] = selecionada;
-    copia[j] = temporario;
+// Embaralha as questões e pega as primeiras.
+// Se o livro não tiver questões suficientes, retorna null.
+export function sortearQuestoes(listaQuestoes: Questao[], quantidade = TAMANHO_PROVA, gerarNumero = Math.random): Questao[] | null {
+  if (listaQuestoes.length < quantidade) {
+    return null;
   }
-  return copia.slice(0, quantidade);
+
+  const embaralhadas = [...listaQuestoes];
+
+  // percorre a lista de trás pra frente trocando cada item com uma posição sorteada
+  for (let i = embaralhadas.length - 1; i > 0; i--) {
+    const posicaoSorteada = Math.floor(gerarNumero() * (i + 1));
+    const auxiliar = embaralhadas[i]!;
+    embaralhadas[i] = embaralhadas[posicaoSorteada]!;
+    embaralhadas[posicaoSorteada] = auxiliar;
+  }
+
+  return embaralhadas.slice(0, quantidade);
 }
 
-// Prova atual mantida apenas em memória (sem armazenamento permanente).
+// prova que está aberta no momento (fica só na memória)
 let provaAtual: Prova | null = null;
-const ouvintes = new Set<() => void>();
 
-export function criarProva(livroId: string, conjunto: Questao[]): Prova | null {
-  const selecionadas = sortearQuestoes(conjunto);
-  if (!selecionadas) return null;
+// funções que precisam ser avisadas quando a prova mudar
+let telasAguardando: Array<() => void> = [];
+
+function avisarTelas() {
+  for (const avisar of telasAguardando) {
+    avisar();
+  }
+}
+
+export function criarProva(livroId: string, listaQuestoes: Questao[]): Prova | null {
+  const questoesEscolhidas = sortearQuestoes(listaQuestoes);
+  if (questoesEscolhidas === null) {
+    return null;
+  }
+
+  const codigo = "PRV-" + Date.now().toString(36).toUpperCase();
+
   provaAtual = {
-    id: `PRV-${Date.now().toString(36).toUpperCase()}`,
-    livroId,
+    id: codigo,
+    livroId: livroId,
     criadaEm: new Date().toISOString(),
-    questoes: selecionadas,
+    questoes: questoesEscolhidas,
   };
-  ouvintes.forEach((l) => l());
+
+  avisarTelas();
   return provaAtual;
 }
 
+// usado nas telas da prova e do gabarito para ler a prova atual
 export function useProvaAtual() {
   return useSyncExternalStore(
-    (cb) => {
-      ouvintes.add(cb);
-      return () => ouvintes.delete(cb);
+    (funcao) => {
+      telasAguardando.push(funcao);
+      return () => {
+        telasAguardando = telasAguardando.filter((item) => item !== funcao);
+      };
     },
     () => provaAtual,
     () => null,
   );
 }
 
-/** Define a prova atual (usada ao reabrir uma prova do histórico). */
+// abre de novo uma prova que veio do histórico
 export function abrirProva(prova: Prova) {
   provaAtual = prova;
-  ouvintes.forEach((l) => l());
+  avisarTelas();
 }

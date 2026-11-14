@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { traduzirErroAutenticacao } from "@/lib/autenticacao";
 
-describe("friendlyAuthError", () => {
+describe("traduzirErroAutenticacao", () => {
   it("traduz credenciais inválidas para uma mensagem clara em português", () => {
     expect(traduzirErroAutenticacao("Invalid login credentials")).toBe("E-mail ou senha incorretos.");
   });

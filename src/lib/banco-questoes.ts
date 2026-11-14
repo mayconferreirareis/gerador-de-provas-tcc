@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { ChaveAlternativa, Questao } from "@/dados/tipos";
 
-/** Busca todas as questões de um livro no banco de dados (paginando de 1000 em 1000). */
+// busca todas as questões de um livro no banco de dados (paginando de 1000 em 1000).
 export async function buscarQuestoesPorLivro(livroId: string): Promise<Questao[]> {
   const resultado: Questao[] = [];
   for (let inicio = 0; ; inicio += 1000) {
@@ -28,7 +28,7 @@ export async function buscarQuestoesPorLivro(livroId: string): Promise<Questao[]
   return resultado;
 }
 
-/** Busca questões específicas pelos ids (usado ao reabrir uma prova do histórico). */
+// busca questões específicas pelos ids (usado ao reabrir uma prova do histórico).
 export async function buscarQuestoesPorIds(ids: string[]): Promise<Questao[]> {
   if (ids.length === 0) return [];
   const porId = new Map<string, Questao>();
@@ -54,7 +54,7 @@ export async function buscarQuestoesPorIds(ids: string[]): Promise<Questao[]> {
   return ids.map((id) => porId.get(id)).filter((q): q is Questao => q !== undefined);
 }
 
-/** Quantidade de questões por livro. */
+// quantidade de questões por livro.
 export async function buscarQuantidadesDeQuestoes(): Promise<Record<string, number>> {
   const quantidades: Record<string, number> = {};
   for (let inicio = 0; ; inicio += 1000) {
@@ -73,7 +73,7 @@ export interface RegistroProvaUsuario {
   questoes_ids: string[];
 }
 
-/** Provas do usuário autenticado (cada usuário vê somente as suas). */
+// provas do usuário autenticado (cada usuário vê somente as suas).
 export async function buscarProvasDoUsuario(): Promise<RegistroProvaUsuario[]> {
   const { data, error: erro } = await supabase
     .from("provas")

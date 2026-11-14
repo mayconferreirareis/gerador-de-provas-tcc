@@ -28,7 +28,7 @@ function Marca() {
   );
 }
 
-/** E-mail do usuário autenticado (null quando deslogado), reativo às mudanças de sessão. */
+// e-mail do usuário autenticado (null quando deslogado), reativo às mudanças de sessão.
 function useEmailSessao() {
   const [email, setEmail] = useState<string | null>(null);
   useEffect(() => {

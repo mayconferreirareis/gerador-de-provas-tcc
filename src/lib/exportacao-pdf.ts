@@ -10,7 +10,7 @@ interface DadosPdfProva {
   colunas?: number;
 }
 
-/** Gera a prova em PDF (A4, em colunas) no navegador e inicia o download. */
+// gera a prova em PDF (A4, em colunas) no navegador e inicia o download.
 export async function baixarProvaPdf({ prova, nomeLivro, participante, dataProva, colunas = 3 }: DadosPdfProva) {
   const { jsPDF } = await import("jspdf");
   const documento = new jsPDF({ unit: "mm", format: "a4" });
@@ -72,7 +72,7 @@ export async function baixarProvaPdf({ prova, nomeLivro, participante, dataProva
   documento.save(`prova-${prova.livroId}-${prova.id}.pdf`);
 }
 
-/** Gera o gabarito em PDF e inicia o download. */
+// gera o gabarito em PDF e inicia o download.
 export async function baixarGabaritoPdf({ prova, nomeLivro }: DadosPdfProva) {
   const { jsPDF } = await import("jspdf");
   const documento = new jsPDF({ unit: "mm", format: "a4" });
